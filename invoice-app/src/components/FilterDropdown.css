@@ -1,0 +1,84 @@
+.filter {
+  position: relative;
+}
+
+.filter__trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.filter__trigger:hover {
+  color: var(--color-purple);
+}
+
+.filter__chevron {
+  color: var(--color-purple);
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.filter__chevron--open {
+  transform: rotate(180deg);
+}
+
+.filter__dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 20px rgba(72, 84, 159, 0.25);
+  min-width: 192px;
+  z-index: 100;
+}
+
+.filter__option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+}
+
+.filter__option input[type="checkbox"] {
+  display: none;
+}
+
+.filter__checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.filter__option input:checked + .filter__checkbox-custom {
+  background-color: var(--color-purple);
+  border-color: var(--color-purple);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='white' d='M2 8l4 4 8-8' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (max-width: 600px) {
+  .filter__hide-mobile {
+    display: none;
+  }
+}
