@@ -1,0 +1,68 @@
+.invoice-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+}
+
+.invoice-card:hover {
+  border-color: var(--color-purple);
+}
+
+.invoice-card__id {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  letter-spacing: -0.25px;
+}
+
+.invoice-card__hash {
+  color: var(--color-purple);
+}
+
+.invoice-card__due {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.invoice-card__client {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: right;
+  flex: 1;
+}
+
+.invoice-card__amount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.8px;
+}
+
+.invoice-card__arrow {
+  color: var(--color-purple);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  .invoice-card {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .invoice-card__id   { grid-column: 1; grid-row: 1; }
+  .invoice-card__client { grid-column: 2; grid-row: 1; text-align: right; }
+  .invoice-card__due  { grid-column: 1; grid-row: 2; }
+  .invoice-card__amount { grid-column: 1; grid-row: 3; font-size: 0.9rem; }
+  .invoice-card__arrow { display: none; }
+}
