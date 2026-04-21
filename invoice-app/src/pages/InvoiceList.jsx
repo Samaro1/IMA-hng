@@ -5,6 +5,7 @@ import sampleInvoices from '../data/sampleInvoices'
 import InvoiceCard from '../components/InvoiceCard'
 import FilterDropdown from '../components/FilterDropdown'
 import { useTheme } from '../context/ThemeContext'
+import Sidebar from '../components/Sidebar'
 import './InvoiceList.css'
 
 function InvoiceList() {
@@ -21,26 +22,7 @@ function InvoiceList() {
 
   return (
     <div className="app-layout">
-
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar__logo">
-          <div className="sidebar__logo-bg">
-            <span className="sidebar__logo-text">F</span>
-          </div>
-        </div>
-        <div className="sidebar__bottom">
-          <button
-            className="sidebar__theme-btn"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          >
-            {theme === 'light' ? '🌙' : '☀️'}
-          </button>
-          <div className="sidebar__avatar">M</div>
-        </div>
-      </aside>
-
+      <Sidebar />
       {/* Main content */}
       <main className="main-content">
         <div className="list-header">
