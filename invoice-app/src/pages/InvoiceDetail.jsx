@@ -1,0 +1,4 @@
+function InvoiceDetail() {
+  return <div>Invoice Detail — coming soon</div>
+}
+export default InvoiceDetail
