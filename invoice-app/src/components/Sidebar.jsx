@@ -17,7 +17,7 @@ function Sidebar() {
         >
           {theme === 'light' ? '🌙' : '☀️'}
         </button>
-        <div className="sidebar__avatar">M</div>
+        <div className="sidebar__avatar">Maro</div>
       </div>
     </aside>
   )

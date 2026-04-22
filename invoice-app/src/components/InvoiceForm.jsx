@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useLocalStorage from '../hooks/useLocalStorage'
-import sampleInvoices from '../data/sampleInvoices'
 import { generateId, calcPaymentDue, calcItemTotal, calcGrandTotal } from '../utils/invoiceUtils'
 import './InvoiceForm.css'
 
@@ -16,9 +14,8 @@ const emptyForm = {
   items: [{ id: '1', name: '', quantity: 1, price: 0, total: 0 }]
 }
 
-function InvoiceForm({ existingInvoice, onClose }) {
+function InvoiceForm({ existingInvoice, onClose, setInvoices }) {
   const navigate = useNavigate()
-  const [invoices, setInvoices] = useLocalStorage('invoices', sampleInvoices)
 
   // If existingInvoice is passed, editing — seed the form with its values
   // Otherwise creating — start with empty form

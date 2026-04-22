@@ -209,8 +209,9 @@ function InvoiceDetail() {
         <InvoiceForm
           existingInvoice={invoice}
           onClose={() => setShowForm(false)}
+          setInvoices={setInvoices}
         />
-      )}
+    )}
     </div>
   )
 }

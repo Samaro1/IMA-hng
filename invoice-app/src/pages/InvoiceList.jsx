@@ -71,8 +71,11 @@ function InvoiceList() {
       </main>
 
       {showForm && (
-        <InvoiceForm onClose={() => setShowForm(false)} />
-      )}
+      <InvoiceForm
+        onClose={() => setShowForm(false)}
+        setInvoices={setInvoices}
+      />
+    )}
     </div>
   )
 }
