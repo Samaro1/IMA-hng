@@ -6,20 +6,19 @@ import StatusBadge from '../components/StatusBadge'
 import DeleteModal from '../components/DeleteModal'
 import { useTheme } from '../context/ThemeContext'
 import Sidebar from '../components/Sidebar'
-
+import InvoiceForm from '../components/InvoiceForm'
 import './InvoiceDetail.css'
 
 function InvoiceDetail() {
-  
   const { id } = useParams()
   const navigate = useNavigate()
   const [invoices, setInvoices] = useLocalStorage('invoices', sampleInvoices)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const { theme, toggleTheme } = useTheme()
+  const [showForm, setShowForm] = useState(false)
+  const { theme } = useTheme()
 
   const invoice = invoices.find(inv => inv.id === id)
 
-  // Redirect if invoice not found
   if (!invoice) {
     return (
       <div className="not-found">
@@ -62,11 +61,10 @@ function InvoiceDetail() {
 
   return (
     <div className="app-layout">
-        <Sidebar />
-      {/* Main content */}
+      <Sidebar />
+
       <main className="detail-content">
 
-        {/* Back button */}
         <button
           className="back-btn"
           onClick={() => navigate('/invoices')}
@@ -75,7 +73,6 @@ function InvoiceDetail() {
           Go back
         </button>
 
-        {/* Status bar */}
         <div className="detail-status-bar">
           <span className="detail-status-bar__label">Status</span>
           <StatusBadge status={invoice.status} />
@@ -83,7 +80,7 @@ function InvoiceDetail() {
             {invoice.status !== 'paid' && (
               <button
                 className="btn btn--secondary"
-                onClick={() => navigate(`/invoices/${id}/edit`)}
+                onClick={() => setShowForm(true)}
               >
                 Edit
               </button>
@@ -105,10 +102,7 @@ function InvoiceDetail() {
           </div>
         </div>
 
-        {/* Invoice card */}
         <div className="detail-card">
-
-          {/* Top: ID + addresses */}
           <div className="detail-card__top">
             <div>
               <h2 className="detail-card__id">
@@ -124,7 +118,6 @@ function InvoiceDetail() {
             </address>
           </div>
 
-          {/* Middle: dates + client info */}
           <div className="detail-card__meta">
             <div className="detail-card__meta-col">
               <div>
@@ -152,7 +145,6 @@ function InvoiceDetail() {
             </div>
           </div>
 
-          {/* Items table */}
           <div className="detail-items">
             <div className="detail-items__header">
               <span>Item Name</span>
@@ -175,7 +167,6 @@ function InvoiceDetail() {
               </span>
             </div>
           </div>
-
         </div>
 
         {/* Mobile action bar */}
@@ -183,7 +174,7 @@ function InvoiceDetail() {
           {invoice.status !== 'paid' && (
             <button
               className="btn btn--secondary"
-              onClick={() => navigate(`/invoices/${id}/edit`)}
+              onClick={() => setShowForm(true)}
             >
               Edit
             </button>
@@ -206,12 +197,18 @@ function InvoiceDetail() {
 
       </main>
 
-      {/* Delete modal */}
       {showDeleteModal && (
         <DeleteModal
           invoiceId={invoice.id}
           onConfirm={handleDelete}
           onCancel={() => setShowDeleteModal(false)}
+        />
+      )}
+
+      {showForm && (
+        <InvoiceForm
+          existingInvoice={invoice}
+          onClose={() => setShowForm(false)}
         />
       )}
     </div>

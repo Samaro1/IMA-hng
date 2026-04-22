@@ -6,12 +6,14 @@ import InvoiceCard from '../components/InvoiceCard'
 import FilterDropdown from '../components/FilterDropdown'
 import { useTheme } from '../context/ThemeContext'
 import Sidebar from '../components/Sidebar'
+import InvoiceForm from '../components/InvoiceForm'
 import './InvoiceList.css'
 
 function InvoiceList() {
   const [invoices, setInvoices] = useLocalStorage('invoices', sampleInvoices)
   const [filterStatuses, setFilterStatuses] = useState([])
-  const { theme, toggleTheme } = useTheme()
+  const [showForm, setShowForm] = useState(false)
+  const { theme } = useTheme()
   const navigate = useNavigate()
 
   const filtered = filterStatuses.length === 0
@@ -23,7 +25,7 @@ function InvoiceList() {
   return (
     <div className="app-layout">
       <Sidebar />
-      {/* Main content */}
+
       <main className="main-content">
         <div className="list-header">
           <div>
@@ -41,7 +43,7 @@ function InvoiceList() {
             />
             <button
               className="btn btn--primary"
-              onClick={() => navigate('/invoices/new')}
+              onClick={() => setShowForm(true)}
             >
               <span className="btn__icon">+</span>
               <span>New <span className="btn__hide-mobile">Invoice</span></span>
@@ -49,7 +51,6 @@ function InvoiceList() {
           </div>
         </div>
 
-        {/* Invoice list or empty state */}
         {filtered.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__illustration">📭</div>
@@ -68,6 +69,10 @@ function InvoiceList() {
           </div>
         )}
       </main>
+
+      {showForm && (
+        <InvoiceForm onClose={() => setShowForm(false)} />
+      )}
     </div>
   )
 }

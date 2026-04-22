@@ -12,7 +12,6 @@ function App() {
           <Route path="/" element={<Navigate to="/invoices" replace />} />
           <Route path="/invoices" element={<InvoiceList />} />
           <Route path="/invoices/:id" element={<InvoiceDetail />} />
-          <Route path="/invoices/:id/edit" element={<InvoiceList />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
