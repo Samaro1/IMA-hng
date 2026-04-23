@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext'
 import './Sidebar.css'
+import avatarImage from '../assets/avatar.jpg'
 
 function Sidebar() {
   const { theme, toggleTheme } = useTheme()
@@ -17,7 +18,9 @@ function Sidebar() {
         >
           {theme === 'light' ? '🌙' : '☀️'}
         </button>
-        <div className="sidebar__avatar">Maro</div>
+        <div className="sidebar__avatar">
+          <img src={avatarImage} alt="User avatar" />
+        </div>
       </div>
     </aside>
   )

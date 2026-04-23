@@ -72,18 +72,55 @@
 }
 
 .sidebar__avatar {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: var(--color-purple);
-  color: white;
+  overflow: hidden;
+  border: 1px solid #494E6E;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 0.8rem;
-  border-top: 1px solid #494E6E;
-  padding-top: 24px;
+}
+
+.sidebar__avatar img {
   width: 100%;
-  justify-content: center;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 72px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 300;
+  }
+
+  .sidebar__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 0 0 20px 0;
+  }
+
+  .sidebar__logo-text {
+    font-size: 1.2rem;
+  }
+
+  .sidebar__bottom {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .sidebar__avatar {
+    width: 36px;
+    height: 36px;
+    border-width: 1px;
+  }
 }
