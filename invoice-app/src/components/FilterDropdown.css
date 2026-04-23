@@ -53,6 +53,13 @@
   font-weight: 700;
   font-size: 0.75rem;
   color: var(--text-primary);
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 8px 0;
+}
+
+.filter__option:hover {
+  color: var(--color-purple);
+  background-color: rgba(124, 93, 250, 0.08);
 }
 
 .filter__option input[type="checkbox"] {

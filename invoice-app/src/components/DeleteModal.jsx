@@ -1,21 +1,48 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import './DeleteModal.css'
 
 function DeleteModal({ invoiceId, onConfirm, onCancel }) {
-  // Close on ESC key
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === 'Escape') onCancel()
-    }
-    document.addEventListener('keydown', handleKey)
-    return () => document.removeEventListener('keydown', handleKey)
-  }, [onCancel])
+  const modalRef = useRef(null)
 
-  // Trap focus inside modal when open
   useEffect(() => {
     const previouslyFocused = document.activeElement
-    return () => previouslyFocused?.focus()
-  }, [])
+    const focusableElements = () => Array.from(
+      modalRef.current?.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') || []
+    ).filter(el => !el.hasAttribute('disabled'))
+
+    const handleKey = (e) => {
+      if (e.key === 'Escape') {
+        onCancel()
+        return
+      }
+
+      if (e.key !== 'Tab') return
+
+      const focusable = focusableElements()
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else if (document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKey)
+    modalRef.current?.querySelector('button')?.focus()
+
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      previouslyFocused?.focus()
+    }
+  }, [onCancel])
 
   return (
     <div
@@ -27,6 +54,7 @@ function DeleteModal({ invoiceId, onConfirm, onCancel }) {
     >
       <div
         className="modal"
+        ref={modalRef}
         onClick={e => e.stopPropagation()}
       >
         <h2 id="modal-title" className="modal__title">Confirm Deletion</h2>

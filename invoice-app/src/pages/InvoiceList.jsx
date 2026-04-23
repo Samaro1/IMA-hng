@@ -11,12 +11,12 @@ import './InvoiceList.css'
 
 function InvoiceList() {
   const [invoices, setInvoices] = useLocalStorage('invoices', sampleInvoices)
-  const [filterStatuses, setFilterStatuses] = useState([])
+  const [filterStatuses, setFilterStatuses] = useState(['all'])
   const [showForm, setShowForm] = useState(false)
   const { theme } = useTheme()
   const navigate = useNavigate()
 
-  const filtered = filterStatuses.length === 0
+  const filtered = filterStatuses.includes('all')
     ? invoices
     : invoices.filter(inv => filterStatuses.includes(inv.status))
 

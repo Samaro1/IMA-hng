@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { generateId, calcPaymentDue, calcItemTotal, calcGrandTotal } from '../utils/invoiceUtils'
 import './InvoiceForm.css'
@@ -212,13 +212,71 @@ function InvoiceForm({ existingInvoice, onClose, setInvoices }) {
   }, [form, submitted])
 
   const hasErrors = Object.keys(errors).length > 0
+  const formRef = useRef(null)
+
+  const closeForm = () => {
+    if (onClose) {
+      onClose()
+    } else {
+      navigate('/invoices')
+    }
+  }
+
+  useEffect(() => {
+    formRef.current?.querySelector('input, select, button, textarea')?.focus()
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeForm()
+      }
+
+      if (e.key !== 'Tab' || !formRef.current) {
+        return
+      }
+
+      const focusable = Array.from(
+        formRef.current.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+      ).filter(el => !el.hasAttribute('disabled'))
+
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [navigate, onClose])
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) closeForm()
+  }
 
   // --- Render ---
   return (
-    <div className="form-overlay">
-      <div className="form-panel">
+    <div className="form-overlay" onClick={handleOverlayClick}>
+      <div
+        className="form-panel"
+        ref={formRef}
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="invoice-form-title"
+      >
 
-        <h2 className="form-panel__title">
+        <h2 id="invoice-form-title" className="form-panel__title">
           {existingInvoice
             ? <>Edit <span>#</span>{existingInvoice.id}</>
             : 'New Invoice'

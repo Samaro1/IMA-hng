@@ -1,14 +1,25 @@
 import { useState } from 'react'
 import './FilterDropdown.css'
 
-const STATUSES = ['draft', 'pending', 'paid']
+const STATUSES = ['all', 'draft', 'pending', 'paid']
 
 function FilterDropdown({ selected, onChange }) {
   const [open, setOpen] = useState(false)
 
   const handleToggle = (status) => {
+    if (status === 'all') {
+      onChange(['all'])
+      return
+    }
+
+    if (selected.includes('all')) {
+      onChange([status])
+      return
+    }
+
     if (selected.includes(status)) {
-      onChange(selected.filter(s => s !== status))
+      const next = selected.filter(s => s !== status)
+      onChange(next.length === 0 ? ['all'] : next)
     } else {
       onChange([...selected, status])
     }
