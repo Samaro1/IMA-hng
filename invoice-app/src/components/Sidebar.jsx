@@ -1,6 +1,7 @@
 import { useTheme } from '../context/ThemeContext'
 import './Sidebar.css'
 import avatarImage from '../assets/avatar.jpg'
+import logoSvg from '../assets/Combined Shape.svg'
 
 function Sidebar() {
   const { theme, toggleTheme } = useTheme()
@@ -8,7 +9,7 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar__logo">
-        <span className="sidebar__logo-text">F</span>
+        <img className="sidebar__logo-img" src={logoSvg} alt="Logo" />
       </div>
       <div className="sidebar__bottom">
         <button
